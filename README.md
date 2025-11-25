@@ -1,109 +1,118 @@
-# Laravel Web Directory API
+# 📚 Library Management System (Laravel 11 API)
 
-This is a proof-of-concept Restful API built using Laravel, functioning as a web directory. A web directory is an online catalogue where various websites are listed, categorized, and ranked based on user actions. This project includes features such as user authentication, searching, submitting, voting on websites, and administrative controls.
+A RESTful API built with Laravel 11, implementing JWT authentication, role-based access, and book borrowing/returning functionality.
 
-## Project Overview
+This system supports user registration, librarian book management, and borrowing features, ideal for library or educational environments.
 
-The purpose of this project is to create a web directory API that allows users to browse, search, submit, and vote on their favorite websites. The API is built with Laravel and uses Laravel Sanctum for authentication.
+# Features
 
-## Features
+## User Management
 
-1. **Categorized Presentation of Websites**: 
-    - Websites are presented in a categorized manner, making it easy for users to find content relevant to their interests.
+User registration (name, email, password, role)
 
-2. **Search Functionality**:
-    - Users can search for websites based on a search term. The search works in combination with categories and ranking and is optimized to handle queries efficiently even with a large number of records.
+JWT Authentication (login, logout, token refresh)
 
-3. **User Authentication**:
-    - Users can log in and log out, with their interactions being identifiable and linked to them. 
+Role-based authorization:
 
-4. **Submit Favorite Websites**:
-    - Authenticated users can submit their favorite websites to the directory.
+Librarian: manage books (create/update/delete)
 
-5. **Voting System**:
-    - Authenticated users can vote/unvote their favorite websites. Categories will show websites in order of how many votes they have, ensuring the most relevant content is always at the top.
+User: view/search books, borrow/return books
 
-6. **Administrative Controls**:
-    - Administrators can delete websites when needed.
+## Book Management
 
-## Functional Requirements
+CRUD operations for books:
 
-- **User Tiers**: 
-    - Three tiers of access: unauthenticated users, authenticated users, and administrators.
-- **Categorized Display**: 
-    - Websites are displayed in a categorized format for easy navigation.
-- **Search Capability**: 
-    - Users can search for websites efficiently, even with a large dataset.
-- **Submission and Voting**: 
-    - Users can submit and vote on websites. Votes determine the ranking within categories.
-- **Administrative Actions**: 
-    - Admins have the ability to delete websites.
-- **Data Relationships**: 
-    - A website can belong to multiple categories.
-- **Vote Limitation**: 
-    - Users can only vote for a website once.
+id, title, author, genre, isbn (unique), published_at, copies_total, copies_available
 
-## Technical Requirements
+Search books by title, author, genre
 
-- **Production-grade Code**: 
-    - Code should be written as if for a production system.
-- **Efficiency**: 
-    - Database migrations should consider structure, indexing, and optimizations.
-- **Integration**: 
-    - Consider how a client would consume the API (e.g., a JavaScript SPA).
-- **Documentation**: 
-    - Code should be easy to follow and understand, with appropriate comments.
-- **Scalability**: 
-    - The solution should handle heavy loads and large amounts of data effectively.
+Pagination for book lists
 
-## Installation
+## Borrowing / Returning
 
-1. **Clone the repository:**
+Borrow books if copies_available > 0
 
-   ```sh
-   git clone https://github.com/your-username/web-directory-api.git
-   cd web-directory-api
-   
-2. **Install dependencies:**
+Prevent borrowing same book twice concurrently
 
-   composer install
-   npm install
+Configurable max active borrows per user (default: 5)
 
-3. **Setup environment variables:**
+Borrowing duration configurable (default: 14 days)
 
-   Copy the .env.example file to .env and configure your environment variables, especially the database settings.
-   cp .env.example .env
+Return books and increment available copies
 
-4. **Generate application key:**
+# Requirements
 
-    php artisan key:generate
+PHP 8.1+
 
-5. **Run migrations and seeders:**
+Composer 2.2+
 
-   php artisan migrate --seed
-   
-6. **Serve the application:**
+MySQL / MariaDB
 
-   php artisan serve
+Laravel 11
 
-**Usage**
+JWT Authentication via tymon/jwt-auth
 
-**API Endpoints**
+# Installation
 
-**Public Endpoints**
+1. Clone the repository:
 
-    . GET /api/categories - List all categories
-    . GET /api/categories/{id} - Get a single category
+git clone https://github.com/lukatabinns/library-management.git
+cd library-management
 
-**Authenticated Endpoints**
+2. Install dependencies:
 
-    ' POST /api/categories - Create a new category
-    ' PUT /api/categories/{id} - Update a category
-    .DELETE /api/categories/{id} - Delete a category
-    
-**Authentication**
+composer install
 
-This project uses Laravel Sanctum for API authentication. You can generate tokens and authenticate users using Sanctum's built-in methods.
+3. Copy .env file:
 
+cp .env.example .env
 
+4. Generate application key:
 
+php artisan key:generate
+
+5. Generate JWT secret:
+
+php artisan jwt:secret
+
+6. Run database migrations:
+
+php artisan migrate
+
+7. (Optional) Seed initial data:
+
+php artisan db:seed
+
+# Configuration
+
+Update .env with your database and JWT settings:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=library
+DB_USERNAME=root
+DB_PASSWORD=
+
+APP_KEY=base64:...
+JWT_SECRET=base64:...
+
+# Running the Application
+
+Start the Laravel development server:
+
+php artisan serve
+
+The API will be available at:
+
+http://127.0.0.1:8000
+
+# Testing
+
+Run PHPUnit tests:
+
+php artisan test
+
+# License
+
+This project is licensed under the MIT License.
