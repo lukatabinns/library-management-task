@@ -56,8 +56,8 @@ JWT Authentication via tymon/jwt-auth
 
 1. Clone the repository:
 
-git clone https://github.com/lukatabinns/library-management.git
-cd library-management
+   git clone https://github.com/lukatabinns/library-management.git
+   cd library-management
 
 2. Install dependencies:
 
