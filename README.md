@@ -61,27 +61,27 @@ JWT Authentication via tymon/jwt-auth
 
 2. Install dependencies:
 
-composer install
+   composer install
 
 3. Copy .env file:
 
-cp .env.example .env
+   cp .env.example .env
 
 4. Generate application key:
 
-php artisan key:generate
+   php artisan key:generate
 
 5. Generate JWT secret:
 
-php artisan jwt:secret
+   php artisan jwt:secret
 
 6. Run database migrations:
 
-php artisan migrate
+   php artisan migrate
 
 7. (Optional) Seed initial data:
 
-php artisan db:seed
+   php artisan db:seed
 
 # Configuration
 
